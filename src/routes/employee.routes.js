@@ -1,0 +1,27 @@
+import express from "express";
+import {
+  getAll,
+  getOne,
+  create,
+  update,
+  remove,
+} from "../controllers/employee.controller.js";
+import upload from "../middleware/upload.js";
+
+const router = express.Router();
+
+const get_all = router.get("/", getAll);
+const getById = router.get("/:id", getOne);
+const create_employee = router.post(
+  "/",
+  upload.single("profile_photo"),
+  create
+);
+const update_employee = router.put(
+  "/:id",
+  upload.single("profile_photo"),
+  update
+);
+const delete_employee = router.delete("/:id", remove);
+
+export { get_all, getById, create_employee, update_employee, delete_employee };
