@@ -7,7 +7,7 @@ import {
   remove,
 } from "../controllers/employee.controller.js";
 import { registerUser, loginUser } from "../controllers/user.controller.js";
-import upload from "../middleware/upload.js";
+import { upload } from "../middleware/upload.middleware.js";
 
 const router = express.Router();
 
@@ -26,7 +26,11 @@ const update_employee = router.put(
 const delete_employee = router.delete("/:id", remove);
 
 // Users
-const registerUsers = router.post("/register", registerUser);
+const registerUsers = router.post(
+  "/register",
+  upload.single("profile_photo"),
+  registerUser
+);
 const loginUsers = router.post("/login", loginUser);
 
 export {

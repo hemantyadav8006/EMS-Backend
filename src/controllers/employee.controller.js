@@ -1,5 +1,5 @@
 import { Employee } from "../models/employee.model.js";
-import cloudinary from "../utils/cloudinary.js";
+import { uploadOnCloudinary as cloudinary } from "../utils/cloudinary.js";
 
 export const getAll = async (req, res) => {
   try {
@@ -30,7 +30,7 @@ export const create = async (req, res) => {
         message: "User with email already exist!",
       });
     }
-    
+
     let result;
 
     try {
