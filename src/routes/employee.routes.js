@@ -6,6 +6,7 @@ import {
   update,
   remove,
 } from "../controllers/employee.controller.js";
+import { registerUser, loginUser } from "../controllers/user.controller.js";
 import upload from "../middleware/upload.js";
 
 const router = express.Router();
@@ -24,4 +25,16 @@ const update_employee = router.put(
 );
 const delete_employee = router.delete("/:id", remove);
 
-export { get_all, getById, create_employee, update_employee, delete_employee };
+// Users
+const registerUsers = router.post("/register", registerUser);
+const loginUsers = router.post("/login", loginUser);
+
+export {
+  get_all,
+  getById,
+  create_employee,
+  update_employee,
+  delete_employee,
+  registerUsers,
+  loginUsers,
+};
