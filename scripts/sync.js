@@ -3,6 +3,7 @@ dotenv.config();
 
 import { sequelize } from "../src/config/database.js";
 import { Employee } from "../src/models/employee.model.js";
+import { User } from "../src/models/user.model.js";
 
 const syncDatabase = async () => {
   try {
