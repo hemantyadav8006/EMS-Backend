@@ -1,11 +1,20 @@
 import multer from "multer";
 
+import fs from "fs";
+const dir = "./Public/temp";
+
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir, { recursive: true });
+}
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
+    console.log("📁 Destination called for file:", file.originalname);
     cb(null, "./Public/temp");
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname + Math.floor((Math.random() + 1) * 10));
+    console.log("📁 Filename called for file:", file.originalname);
+    cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 

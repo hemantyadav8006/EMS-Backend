@@ -3,7 +3,8 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { Op } from "sequelize";
 
 export const registerUser = async (req, res) => {
-  const { username, email, password, profile_photo } = req.body;
+  const { username, email, password } = req.body;
+
   // check validation
   if ([username, email, password].some((e) => e.trim() === "")) {
     return res.status(400).json({
@@ -23,8 +24,7 @@ export const registerUser = async (req, res) => {
       .json({ success: false, message: "User already exist" });
   }
 
-  //   console.log("req.files", req.files);
-  const profilePhotoLocalPath = req.files?.profile_photo[0].path;
+  const profilePhotoLocalPath = req.file?.path;
   if (!profilePhotoLocalPath) {
     return res
       .status(400)
@@ -56,13 +56,11 @@ export const registerUser = async (req, res) => {
       message: "Something went wrong while registering user",
     });
   }
-  return res
-    .status(201)
-    .json({
-      success: true,
-      message: "User registered successfully",
-      data: createdUser,
-    });
+  return res.status(201).json({
+    success: true,
+    message: "User registered successfully",
+    data: createdUser,
+  });
 };
 
 export const loginUser = async (req, res) => {

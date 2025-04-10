@@ -28,9 +28,18 @@ const delete_employee = router.delete("/:id", remove);
 // Users
 const registerUsers = router.post(
   "/register",
+  (req, res, next) => {
+    console.log("🔥 Headers:", req.headers["content-type"]);
+    next();
+  },
   upload.single("profile_photo"),
-  registerUser
+  (req, res) => {
+    console.log("✅ Got body:", req.body);
+    console.log("✅ Got file:", req.file);
+    registerUser(req, res);
+  }
 );
+
 const loginUsers = router.post("/login", loginUser);
 
 export {
