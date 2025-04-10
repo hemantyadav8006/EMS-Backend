@@ -38,7 +38,7 @@ export const User = sequelize.define(
         },
       },
     },
-    profilel_photo: {
+    profile_photo: {
       type: DataTypes.STRING,
       allowNull: true,
     },
