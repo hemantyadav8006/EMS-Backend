@@ -8,6 +8,7 @@ import {
 } from "../controllers/employee.controller.js";
 import { registerUser, loginUser } from "../controllers/user.controller.js";
 import { upload } from "../middleware/upload.middleware.js";
+import { verifyAccessToken } from "../middleware/verifyToken.js";
 
 const router = express.Router();
 
@@ -40,7 +41,7 @@ const registerUsers = router.post(
   }
 );
 
-const loginUsers = router.post("/login", loginUser);
+const loginUsers = router.post("/login", verifyAccessToken, loginUser);
 
 export {
   get_all,

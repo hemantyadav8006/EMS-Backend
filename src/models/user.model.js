@@ -42,6 +42,10 @@ export const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    refreshToken: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
   },
   {
     timestamps: true,
@@ -79,4 +83,37 @@ User.prototype.generateRefreshToken = function () {
   return jwt.sign({ id: this.id }, process.env.REFRESH_SECRET, {
     expiresIn: process.env.REFRESH_EXPIRY,
   });
+};
+
+// 🔐 Add Refresh Route
+export const refreshTokenHandler = async (req, res) => {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) {
+    return res.status(401).json({ message: "No refresh token provided" });
+  }
+
+  try {
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_SECRET);
+    const user = await User.findByPk(decoded.id);
+
+    if (!user || user.refreshToken !== refreshToken) {
+      return res.status(403).json({ message: "Invalid refresh token" });
+    }
+
+    const newAccessToken = user.generateAccessToken();
+    const newRefreshToken = user.generateRefreshToken();
+
+    user.refreshToken = newRefreshToken;
+    await user.save();
+
+    return res.status(200).json({
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
+    });
+  } catch (err) {
+    return res
+      .status(403)
+      .json({ message: "Refresh token expired or invalid" });
+  }
 };
