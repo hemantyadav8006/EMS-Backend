@@ -64,17 +64,17 @@ export const registerUser = async (req, res) => {
 };
 
 export const loginUser = async (req, res) => {
-  const { password, email } = req.body;
+  const { username, password } = req.body;
 
   // check empty fields
-  if (!email || !password) {
+  if (!username || !password) {
     return res
       .status(400)
-      .json({ success: false, message: "email or password can't be null." });
+      .json({ success: false, message: "username or password can't be null." });
   }
 
   // check existing user
-  const user = await User.findOne({ where: { email: email } });
+  const user = await User.findOne({ where: { username: username } });
   if (!user) {
     return res.status(404).json({ success: false, message: "User not Found" });
   }

@@ -41,7 +41,7 @@ const registerUsers = router.post(
   }
 );
 
-const loginUsers = router.post("/login", verifyAccessToken, loginUser);
+const loginUsers = router.post("/login", loginUser);
 
 export {
   get_all,
