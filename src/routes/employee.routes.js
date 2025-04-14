@@ -12,8 +12,8 @@ import { verifyAccessToken } from "../middleware/verifyToken.js";
 
 const router = express.Router();
 
-const get_all = router.get("/", getAll);
-const getById = router.get("/:id", getOne);
+const get_all = router.get("/", verifyAccessToken, getAll);
+const getById = router.get("/:id", verifyAccessToken, getOne);
 const create_employee = router.post(
   "/",
   upload.single("profile_photo"),
@@ -24,7 +24,7 @@ const update_employee = router.put(
   upload.single("profile_photo"),
   update
 );
-const delete_employee = router.delete("/:id", remove);
+const delete_employee = router.delete("/:id", verifyAccessToken, remove);
 
 // Users
 const registerUsers = router.post(

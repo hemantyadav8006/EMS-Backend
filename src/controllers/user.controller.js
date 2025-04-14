@@ -95,13 +95,13 @@ export const loginUser = async (req, res) => {
   return res.status(200).json({
     success: true,
     message: "Login Successfull",
-    accessToken,
-    refreshToken,
     data: {
       id: user.id,
       username: user.username,
       email: user.email,
       profile_photo: user.profile_photo,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
     },
   });
 };
