@@ -21,6 +21,7 @@ const create_employee = router.post(
 );
 const update_employee = router.put(
   "/:id",
+  verifyAccessToken,
   upload.single("profile_photo"),
   update
 );
