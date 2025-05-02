@@ -16,18 +16,23 @@ export const getAll = async (req, res) => {
 
 export const create = async (req, res) => {
   try {
-    if (!req.body.email || !req.name) {
+    if (!req.body.email || !req.body.username || !req.body.password) {
       return res.status(400).json({
         success: false,
-        message: "Missing required fields or file",
+        message: "Missing required fields!",
       });
     }
 
-    const emp = await Employee.findOne({ where: { email: req.body.email } });
-    if (emp) {
+    const checkEmailExist = await Employee.findOne({
+      where: { email: req.body.email },
+    });
+    const checkUsernameExist = await Employee.findOne({
+      where: { username: req.body.username },
+    });
+    if (checkEmailExist || checkUsernameExist) {
       return res.status(400).json({
         success: false,
-        message: "User with email already exist!",
+        message: "User with email or username already exist!",
       });
     }
 

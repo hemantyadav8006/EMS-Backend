@@ -4,9 +4,18 @@ import { DataTypes } from "sequelize";
 export const Employee = sequelize.define(
   "Employee",
   {
-    name: {
+    username: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "username can't be empty",
+        },
+      },
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: true,
       validate: {
         notEmpty: {
           msg: "Name can't be empty",
@@ -50,16 +59,24 @@ export const Employee = sequelize.define(
     },
     department: {
       type: DataTypes.STRING,
+      allowNull: true,
     },
     designation: {
       type: DataTypes.STRING,
+      allowNull: true,
     },
     joiningDate: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
+      allowNull: true,
     },
     profile_photo: {
       type: DataTypes.STRING,
+      allowNull: true,
+    },
+    refreshToken: {
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
   },
   {
